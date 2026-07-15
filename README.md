@@ -1,96 +1,77 @@
 # 🚀 PW-API-Testing-Framework
 
-A production-ready, scalable, and maintainable **API Testing Framework** built with **Playwright** and **TypeScript**. This framework follows industry best practices, implements reusable design patterns, and provides a robust foundation for enterprise-grade API test automation with AI-assisted development workflows.
+A production-ready, scalable, and maintainable **API Testing Framework** built with **Playwright** and **TypeScript**. The framework follows industry best practices with reusable utilities, custom assertions, environment configuration, Docker support, GitHub Actions CI/CD, and AI-assisted development workflows.
+
+![Playwright](https://img.shields.io/badge/Playwright-API%20Testing-45ba4b?logo=playwright)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+![Node.js](https://img.shields.io/badge/Node.js-20.x-green?logo=node.js)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
 ---
 
-## 📌 Overview
+# ✨ Features
 
-PW-API-Testing-Framework is designed for QA Engineers, SDETs, and Automation Engineers who want to build reliable, maintainable, and scalable API automation solutions.
+## Production Ready Framework
 
-The framework includes reusable components, fluent API design, custom utilities, JSON Schema validation, enhanced reporting, and CI/CD integration to support modern software delivery practices.
-
----
-
-# ✨ Key Features
-
-### 🏗️ Production-Ready Architecture
-- Scalable and maintainable framework structure
-- Fluent Interface Design Pattern
-- Modular and reusable components
-- Enterprise-grade folder organization
+- Built with Playwright API Testing
+- TypeScript-based architecture
+- Modular & reusable design
+- Fluent API request handling
+- Enterprise-ready folder structure
 - Configuration-driven execution
-- Environment-based test execution
-- SOLID principles implementation
-- Design Pattern-based architecture
+- Docker support
+- GitHub Actions CI/CD
+- Parallel execution
+- Rich HTML reporting
 
-### ⚡ API Automation
-- REST API Testing using Playwright
-- GET, POST, PUT, PATCH & DELETE support
-- Authentication handling
-- Header management
-- Query parameter support
-- Request body builders
-- File upload support
-- Response validation
-- Custom request handlers
+---
 
-### ✅ Advanced Validation
-- JSON Schema Validation
-- Automatic JSON Schema Generation
+## API Testing Capabilities
+
+- GET
+- POST
+- PUT
+- PATCH
+- DELETE
+
+Supports:
+
+- Authentication
+- Custom Headers
+- Query Parameters
+- Request Payload Validation
+- Response Validation
+- Status Code Validation
+
+---
+
+## Advanced Validation
+
 - Custom Assertions
-- Deep Object Comparison
+- JSON Response Validation
 - Response Time Validation
 - Header Validation
-- Status Code Validation
-- Data Integrity Checks
-
-### 📊 Reporting
-- Playwright HTML Reports
-- Detailed Test Logs
-- Request & Response Logging
-- Failure Screenshots (if applicable)
-- Execution Summary
-- Error Diagnostics
-
-### 🔄 CI/CD Ready
-- GitHub Actions Integration
-- Azure DevOps Ready
-- Jenkins Compatible
-- Parallel Test Execution
-- Headless Execution
-- Environment Variables Support
-
-### 🤖 AI-Powered Development
-- GitHub Copilot Integration
-- AI-assisted Test Script Generation
-- Automated Assertion Suggestions
-- Faster Framework Development
-- AI-assisted Code Refactoring
-- Smart Boilerplate Generation
-
-### 🛠 Developer Experience
-- TypeScript Support
-- IntelliSense
-- Strong Type Safety
-- ESLint Ready
-- Prettier Support
-- Easy Debugging
-- Reusable Utilities
-- Clean Code Practices
+- Data Integrity Validation
+- Schema-ready Architecture
 
 ---
 
-# 🛠 Tech Stack
+## Reporting
 
-| Technology | Purpose |
-|------------|---------|
-| Playwright | API Testing |
-| TypeScript | Programming Language |
-| Node.js | Runtime Environment |
-| JSON Schema | Response Validation |
-| GitHub Actions | CI/CD |
-| GitHub Copilot | AI-assisted Development |
+- Playwright HTML Report
+- Request Logging
+- Response Logging
+- Execution Summary
+- Failure Diagnostics
+
+---
+
+## AI Enhanced Development
+
+- GitHub Copilot Ready
+- AI-assisted Test Creation
+- Faster Assertion Generation
+- Improved Code Quality
 
 ---
 
@@ -99,51 +80,73 @@ The framework includes reusable components, fluent API design, custom utilities,
 ```text
 PW-API-Testing-Framework
 │
-├── config/
-├── data/
-├── reports/
-├── schemas/
-├── src/
-│   ├── api/
-│   ├── builders/
-│   ├── clients/
-│   ├── constants/
-│   ├── helpers/
-│   ├── models/
-│   ├── utils/
-│   └── validations/
+├── .github/
+│   └── workflows/
+│       └── docker-tests.yml
+│
+├── helpers/
+│   └── createToken.ts
 │
 ├── tests/
-│   ├── smoke/
-│   ├── regression/
-│   └── integration/
+│   ├── get_api_validation.spec.ts
+│   ├── post_api_validation.spec.ts
+│   └── smokeTest.spec.ts
 │
-├── playwright.config.ts
+├── utils/
+│   ├── custom_expect.ts
+│   ├── fixtures.ts
+│   ├── logger.ts
+│   └── request-handler.ts
+│
+├── playwright-report/
+│   └── index.html
+│
+├── test-results/
+│
+├── .dockerignore
+├── .gitignore
+├── api-test.config.ts
+├── docker-compose.yml
+├── Dockerfile
 ├── package.json
+├── package-lock.json
+├── playwright.config.ts
+├── tsconfig.json
 └── README.md
 ```
 
+> **Note:** `node_modules/` is intentionally excluded from the repository and is generated automatically after running `npm install`.
+
 ---
 
-# 🚀 Getting Started
+# 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Playwright | API Automation |
+| TypeScript | Programming Language |
+| Node.js | Runtime |
+| Docker | Containerization |
+| GitHub Actions | CI/CD |
+| GitHub Copilot | AI Development |
+
+---
+
+# 🚀 Installation
 
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/PW-API-Testing-Framework.git
+git clone git@github.com:qasandeep-patil/PW-API-Testing-Framework.git
 
 cd PW-API-Testing-Framework
 ```
-
----
 
 ## Install Dependencies
 
 ```bash
 npm install
 ```
-
----
 
 ## Install Playwright
 
@@ -153,23 +156,35 @@ npx playwright install
 
 ---
 
-## Run All Tests
+# ▶️ Running Tests
+
+### Execute all tests
 
 ```bash
 npx playwright test
 ```
 
----
-
-## Run Specific Test
+### Execute a single test
 
 ```bash
-npx playwright test tests/api/smokeTest.spec.ts
+npx playwright test tests/get_api_validation.spec.ts
+```
+
+### Execute Smoke Tests
+
+```bash
+npx playwright test tests/smokeTest.spec.ts
+```
+
+### Execute in Headed Mode
+
+```bash
+npx playwright test --headed
 ```
 
 ---
 
-## Generate HTML Report
+# 📊 View Report
 
 ```bash
 npx playwright show-report
@@ -177,124 +192,128 @@ npx playwright show-report
 
 ---
 
-# 🧪 Framework Capabilities
+# 🐳 Docker Execution
 
-- REST API Testing
-- Authentication Testing
-- CRUD Operations
-- Data-Driven Testing
-- Environment Configuration
-- Request Builders
-- Custom Utilities
-- Reusable API Clients
-- Custom Assertions
-- JSON Schema Validation
-- Automatic Schema Generation
-- API Response Verification
-- Error Handling
-- Logging
-- Reporting
-- Parallel Execution
-- CI/CD Integration
-- Docker Integration
+Build Docker image
+
+```bash
+docker build -t pw-api-framework .
+```
+
+Run Tests
+
+```bash
+docker-compose up --build
+```
 
 ---
 
-# 🎯 Design Principles
+# ⚙️ CI/CD
+
+GitHub Actions workflow is available at:
+
+```
+.github/workflows/docker-tests.yml
+```
+
+The pipeline performs:
+
+- Install Dependencies
+- Install Playwright
+- Execute API Tests
+- Generate HTML Report
+- Publish Test Results
+
+---
+
+# 🧩 Framework Components
+
+## Helpers
+
+- Authentication Token Generation
+- API Helper Methods
+
+## Utilities
+
+- Request Handler
+- Custom Assertions
+- Logger
+- Playwright Fixtures
+
+---
+
+# 🎯 Best Practices
 
 - Clean Architecture
 - SOLID Principles
-- DRY (Don't Repeat Yourself)
-- KISS (Keep It Simple)
-- Reusable Components
-- Modular Design
-- Maintainability
-- Scalability
+- DRY Principle
+- Reusable Utilities
+- Centralized Configuration
+- Type Safety
+- Easy Maintenance
 
 ---
 
-# 🤖 AI-Enhanced Workflow
+# 📌 Roadmap
 
-This framework embraces modern AI-assisted development practices:
-
-- Generate API test scripts using GitHub Copilot
-- Create assertions with AI assistance
-- Refactor test code efficiently
-- Generate JSON Schemas automatically
-- Speed up framework development
-- Improve code quality using AI recommendations
-
----
-
-# 📈 Best Practices
-
-- Modular framework design
-- Reusable request handlers
-- Configuration-driven execution
-- Environment isolation
-- Custom assertion libraries
-- Centralized test data
-- Robust error handling
-- Detailed reporting
-- Type-safe implementation
-- CI/CD friendly architecture
-
----
-
-# 🎯 Ideal For
-
-- QA Engineers
-- SDETs
-- Test Automation Engineers
-- Software Engineers
-- DevOps Teams
-- Enterprise QA Teams
-- API Automation Projects
-
----
-
-# 📚 Learning Objectives
-
-By using this framework, you'll learn:
-
-- Playwright API Automation
-- Advanced TypeScript
-- Framework Design
-- Fluent Interface Pattern
 - JSON Schema Validation
-- Enterprise Automation Practices
-- AI-assisted Test Automation
-- CI/CD Integration
-- Docker Integration
-- Custom Utilities Development
-- Production-Ready Framework Design
+- Automatic Schema Generation
+- Data Driven Testing
+- Environment Management
+- Allure Reporting
+- Retry Mechanism
+- API Mocking
+- Performance Testing
+- Contract Testing
+- AI Generated Assertions
 
 ---
 
 # 🤝 Contributing
 
-Contributions are welcome!
-
-If you'd like to improve this framework:
+Contributions are welcome.
 
 1. Fork the repository
 2. Create a feature branch
+
+```bash
+git checkout -b feature/new-feature
+```
+
 3. Commit your changes
+
+```bash
+git commit -m "Added new feature"
+```
+
 4. Push your branch
+
+```bash
+git push origin feature/new-feature
+```
+
 5. Open a Pull Request
 
 ---
 
 # ⭐ Support
 
-If you find this project useful, consider giving it a ⭐ on GitHub. Your support helps improve the project and encourages future enhancements.
+If you found this framework helpful, please consider giving it a ⭐ on GitHub.
 
 ---
 
-## 📄 License
+# 📄 License
 
 This project is licensed under the MIT License.
 
 ---
 
-**Built with ❤️ using Playwright, TypeScript, and modern API testing best practices.**
+## 👨‍💻 Author
+
+**Sandeep Patil**
+
+QA Automation | SDET | Playwright | API Testing | TypeScript | AI Testing | CI/CD | Docker
+
+---
+
+**Built with ❤️ using Playwright, TypeScript, Docker, and modern API testing best practices.**
