@@ -164,15 +164,7 @@ npx playwright test
 ## Run Specific Test
 
 ```bash
-npx playwright test tests/api/users.spec.ts
-```
-
----
-
-## Run in Headed Mode
-
-```bash
-npx playwright test --headed
+npx playwright test tests/api/smokeTest.spec.ts
 ```
 
 ---
