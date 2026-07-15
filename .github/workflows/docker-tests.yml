@@ -1,4 +1,4 @@
-name: Playwright Tests - Docker Pipeline
+name: Playwright Tests - Docker Pipeline (Node 24)
 
 on:
   push:

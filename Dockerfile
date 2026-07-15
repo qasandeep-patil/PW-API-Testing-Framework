@@ -1,5 +1,5 @@
-# Use official Playwright image with all dependencies included
-FROM mcr.microsoft.com/playwright:v1.61.1-jammy
+# Use official Playwright image with Node 24 and all dependencies included
+FROM mcr.microsoft.com/playwright:v1.61.1-noble
 
 WORKDIR /app
 
