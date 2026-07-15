@@ -26,7 +26,8 @@ export default defineConfig({
   // Reporters
   reporter: [
     ['list'],
-    ['html']
+    ['html'],
+    ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
 
   // Shared settings
