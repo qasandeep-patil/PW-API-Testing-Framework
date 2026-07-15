@@ -196,6 +196,7 @@ npx playwright show-report
 - Reporting
 - Parallel Execution
 - CI/CD Integration
+- Docker Integration
 
 ---
 
@@ -264,6 +265,7 @@ By using this framework, you'll learn:
 - Enterprise Automation Practices
 - AI-assisted Test Automation
 - CI/CD Integration
+- Docker Integration
 - Custom Utilities Development
 - Production-Ready Framework Design
 
