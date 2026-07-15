@@ -1,31 +1,24 @@
-name: Playwright API Tests
+name: Direct Node.js Tests (Alternative)
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
-  schedule:
-    # Run tests daily at 2 AM UTC
-    - cron: '0 2 * * *'
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [20.x]
+    name: Run Tests on Node.js
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.x
           cache: 'npm'
 
       - name: Install dependencies
@@ -39,27 +32,18 @@ jobs:
         env:
           CI: true
 
-      - name: Upload test results
+      - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-direct
           path: playwright-report/
           retention-days: 30
 
-      - name: Upload test results artifacts
+      - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: test-results-direct
           path: test-results/
           retention-days: 30
-
-      - name: Publish test report
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Playwright Test Report
-          path: 'test-results/junit.xml'
-          reporter: 'java-junit'
-          fail-on-error: false

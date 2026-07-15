@@ -1,14 +1,19 @@
-name: Playwright Docker Tests
+name: Docker Build → Run Tests → Publish Report
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  schedule:
+    # Run tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # Manual trigger
 
 jobs:
-  docker-test:
+  build-and-test:
     runs-on: ubuntu-latest
+    name: Build Docker Image & Run Tests
 
     steps:
       - name: Checkout code
@@ -23,29 +28,70 @@ jobs:
           context: .
           push: false
           load: true
-          tags: pw-api-testing:latest
+          tags: pw-api-testing:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Run tests in Docker
+      - name: Run tests in Docker container
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/test-results:/app/test-results \
             -v ${{ github.workspace }}/playwright-report:/app/playwright-report \
-            pw-api-testing:latest
+            pw-api-testing:${{ github.sha }}
 
-      - name: Upload test results
+      - name: Upload Playwright HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: docker-playwright-report
+          name: playwright-html-report
           path: playwright-report/
           retention-days: 30
 
-      - name: Upload test results artifacts
+      - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: docker-test-results
+          name: test-results
           path: test-results/
           retention-days: 30
+
+      - name: Publish Test Report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Playwright Test Report
+          path: 'test-results/junit.xml'
+          reporter: 'java-junit'
+          fail-on-error: false
+
+      - name: Comment PR with Test Results
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const testResultsDir = '${{ github.workspace }}/test-results';
+            
+            let comment = '## 🧪 Test Results\n\n';
+            
+            // Try to read test summary
+            const summaryFile = `${testResultsDir}/junit.xml`;
+            if (fs.existsSync(summaryFile)) {
+              comment += '✅ Tests completed!\n';
+              comment += `📊 Report artifacts: Check "Artifacts" tab\n`;
+            } else {
+              comment += '⚠️ Test results not found\n';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Fail if tests failed
+        if: failure()
+        run: |
+          echo "::error::Tests failed! Check artifacts for details."
+          exit 1
