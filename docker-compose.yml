@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  playwright-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CI: "true"
+    volumes:
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    ports:
+      - "9323:9323"
+    command: npm run test
+
+  # Optional: Playwright inspector for debugging
+  playwright-debug:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CI: "false"
+    volumes:
+      - ./tests:/app/tests
+      - ./utils:/app/utils
+      - ./helpers:/app/helpers
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    ports:
+      - "9323:9323"
+    command: npm run test:debug

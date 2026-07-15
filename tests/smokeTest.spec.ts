@@ -5,11 +5,7 @@ import { expect, test } from '../utils/fixtures';
 let authToken: string;
 
 test.beforeAll('Creation of Authorization token', async ({ api, config }) => {
-    // const tokenResponse = await api
-    //     .path('/users/login')
-    //     .body({ "user": { "email": config.userEmail, "password": config.userPassword } })
-    //     .postRequest(200)
-    // authToken = 'Token ' + tokenResponse.user.token
+    
     authToken = await createToken(config.userEmail, config.userPassword)
 
 })
