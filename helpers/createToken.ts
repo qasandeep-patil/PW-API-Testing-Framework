@@ -1,11 +1,27 @@
 import { RequestHandler } from "../utils/request-handler";
+import { config } from "../api-test.config";
+import { APILogger } from "../utils/logger";
+import { request } from "@playwright/test";
 
-export async function createToken(api: RequestHandler, email: string, password: string) {
+export async function createToken(email: string, password: string) {
+    const context = await request.newContext()
+    const logger = new APILogger()
+    const api = new RequestHandler(context, config.apiUrl, logger );
 
-    const tokenResponse = await api
+    try{
+        const tokenResponse = await api
         .path('/users/login')
         .body({ "user": { "email": email, "password": password } })
         .postRequest(200)
     return 'Token ' + tokenResponse.user.token
+
+    }catch(error){
+        const errorToThrow = error instanceof Error ? error : new Error(String(error))
+        Error.captureStackTrace(errorToThrow, createToken)
+        throw errorToThrow
+    }finally{
+        await context.dispose()
+    }
+    
     
 }
