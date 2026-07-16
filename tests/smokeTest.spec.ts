@@ -2,13 +2,13 @@ import { createToken } from '../helpers/createToken';
 import { expect, test } from '../utils/fixtures';
 
 
-let authToken: string;
+// let authToken: string;
 
-test.beforeAll('Creation of Authorization token', async ({ api, config }) => {
+// test.beforeAll('Creation of Authorization token', async ({ api, config }) => {
     
-    authToken = await createToken(config.userEmail, config.userPassword)
+//     authToken = await createToken(config.userEmail, config.userPassword)
 
-})
+// })
 
 
 test('GET API - Get Articles', async ({ api }) => {
@@ -36,7 +36,6 @@ test('GET API - Get Tags', async ({ api }) => {
 test('Create and Delete Article', async ({ api }) => {
     const createArticleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .body({
             "article": {
                 "title": "testing sandeep article two",
@@ -51,7 +50,6 @@ test('Create and Delete Article', async ({ api }) => {
 
     const articleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .params({ limit: 10, offset: 0 })
         .getRequest(200)
 
@@ -59,14 +57,10 @@ test('Create and Delete Article', async ({ api }) => {
 
     await api
         .path(`/articles/${slugId}`)
-        .headers({
-            Authorization: authToken
-        })
         .deleteRequest(204)
 
     const deleteArticleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .params({ limit: 10, offset: 0 })
         .getRequest(200)
 
@@ -76,7 +70,6 @@ test('Create and Delete Article', async ({ api }) => {
 test('Create, update and Delete Article', async ({ api }) => {
     const createArticleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .body({
             "article": {
                 "title": "testing new sandeep article two",
@@ -91,7 +84,6 @@ test('Create, update and Delete Article', async ({ api }) => {
 
     const updateArticleRespnse = await api
         .path(`/articles/${slugId}`)
-        .headers({ Authorization: authToken })
         .body({
             "article": {
                 "title": "testing new updated sandeep article two",
@@ -106,7 +98,6 @@ test('Create, update and Delete Article', async ({ api }) => {
 
     const articleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .params({ limit: 10, offset: 0 })
         .getRequest(200)
 
@@ -114,14 +105,10 @@ test('Create, update and Delete Article', async ({ api }) => {
 
     await api
         .path(`/articles/${newSlugId}`)
-        .headers({
-            Authorization: authToken
-        })
         .deleteRequest(204)
 
     const deleteArticleResponse = await api
         .path('/articles')
-        .headers({ Authorization: authToken })
         .params({ limit: 10, offset: 0 })
         .getRequest(200)
 
