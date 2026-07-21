@@ -1,14 +1,6 @@
 import { createToken } from '../helpers/createToken';
 import { expect, test } from '../utils/fixtures';
-
-
-// let authToken: string;
-
-// test.beforeAll('Creation of Authorization token', async ({ api, config }) => {
-    
-//     authToken = await createToken(config.userEmail, config.userPassword)
-
-// })
+import { validateSchema } from '../utils/schema-validator';
 
 
 test('GET API - Get Articles', async ({ api }) => {
@@ -28,7 +20,7 @@ test('GET API - Get Tags', async ({ api }) => {
     const response = await api
         .path('/tags')
         .getRequest(200)
-
+    expect(response).shouldMatchSchema('tags', 'GET_tags')
     expect(response.tags[0]).shouldEqual('Test');
     expect(response.tags.length).shouldBeLessThanOrEqual(10);
 })

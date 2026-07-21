@@ -30,37 +30,25 @@ export default defineConfig({
     ['junit', { outputFile: 'test-results/junit.xml' }]
   ],
 
-  // Shared settings
-  use: {
-    // baseURL: 'http://localhost:3000',
 
-    // Collect trace only on first retry
-    trace: 'on-first-retry',
+  use: {
+    
+    
   },
 
-  // Browser projects
+  
   projects: [
     {
       name: 'api-testing',
+      testMatch: 'get_api*',
+      dependencies: ['smoke-tests']
       
-    // },
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //   },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //   },
-    },
+    },{
+
+      name: 'smoke-tests',
+      testMatch: 'smoke*'
+    }
   ],
 
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  
 });
